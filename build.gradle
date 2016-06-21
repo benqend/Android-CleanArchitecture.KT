@@ -16,6 +16,10 @@ buildscript {
   }
 }
 
+ext {
+  kotlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
 allprojects {
   ext {
     androidApplicationId = 'com.fernanependocejas.android10.sample.presentation'
