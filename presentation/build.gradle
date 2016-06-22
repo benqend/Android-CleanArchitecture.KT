@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.fernandocejas.frodo'
 apply plugin: 'kotlin-android'
 
@@ -64,9 +63,9 @@ android {
   }
 }
 
-//kapt {
-//  generateStubs = true
-//}
+kapt {
+  generateStubs = true
+}
 
 dependencies {
   def presentationDependencies = rootProject.ext.presentationDependencies
@@ -76,10 +75,10 @@ dependencies {
   compile project(':domain')
   compile project(':data')
 
-  apt presentationDependencies.daggerCompiler
-  // kapt presentationDependencies.daggerCompiler
+  kapt    presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger
   compile presentationDependencies.butterKnife
+  kapt    presentationDependencies.butterKnifeCompiler
   compile presentationDependencies.recyclerView
   compile presentationDependencies.rxJava
   compile presentationDependencies.rxAndroid
