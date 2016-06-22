@@ -65,7 +65,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     return position;
   }
 
-  public void setUsersCollection(Collection<UserModel> usersCollection) {
+  public void setUsersCollection(Collection<? extends UserModel> usersCollection) {
     this.validateUsersCollection(usersCollection);
     this.usersCollection = (List<UserModel>) usersCollection;
     this.notifyDataSetChanged();
@@ -75,7 +75,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     this.onItemClickListener = onItemClickListener;
   }
 
-  private void validateUsersCollection(Collection<UserModel> usersCollection) {
+  private void validateUsersCollection(Collection<? extends UserModel> usersCollection) {
     if (usersCollection == null) {
       throw new IllegalArgumentException("The list cannot be null");
     }

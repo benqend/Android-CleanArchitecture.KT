@@ -60,7 +60,7 @@ class RestApiImpl
                         subscriber.onError(NetworkConnectionException())
                     }
                 } catch (e: Exception) {
-                    subscriber.onError(NetworkConnectionException(e.cause))
+                    subscriber.onError(NetworkConnectionException(e))
                 }
 
             } else {
@@ -82,7 +82,7 @@ class RestApiImpl
                         subscriber.onError(NetworkConnectionException())
                     }
                 } catch (e: Exception) {
-                    subscriber.onError(NetworkConnectionException(e.cause))
+                    subscriber.onError(NetworkConnectionException(e))
                 }
 
             } else {

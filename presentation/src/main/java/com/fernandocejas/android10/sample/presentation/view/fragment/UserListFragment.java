@@ -24,6 +24,9 @@ import com.fernandocejas.android10.sample.presentation.presenter.UserListPresent
 import com.fernandocejas.android10.sample.presentation.view.UserListView;
 import com.fernandocejas.android10.sample.presentation.view.adapter.UsersAdapter;
 import com.fernandocejas.android10.sample.presentation.view.adapter.UsersLayoutManager;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 import javax.inject.Inject;
 
@@ -125,7 +128,7 @@ public class UserListFragment extends BaseFragment implements UserListView {
     this.rl_retry.setVisibility(View.GONE);
   }
 
-  @Override public void renderUserList(Collection<UserModel> userModelCollection) {
+  @Override public void renderUserList(Collection<? extends UserModel> userModelCollection) {
     if (userModelCollection != null) {
       this.usersAdapter.setUsersCollection(userModelCollection);
     }
