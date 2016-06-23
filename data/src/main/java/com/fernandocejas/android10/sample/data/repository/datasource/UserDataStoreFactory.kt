@@ -43,7 +43,7 @@ constructor(context: Context, private val userCache: UserCache) {
     fun create(userId: Int): UserDataStore {
         val userDataStore: UserDataStore
 
-        if (!this.userCache.isExpired() && this.userCache.isCached(userId)) {
+        if (!this.userCache.isExpired && this.userCache.isCached(userId)) {
             userDataStore = DiskUserDataStore(this.userCache)
         } else {
             userDataStore = createCloudDataStore()
