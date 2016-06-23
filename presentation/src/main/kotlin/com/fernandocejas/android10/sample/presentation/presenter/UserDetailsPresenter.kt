@@ -26,6 +26,7 @@ import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMappe
 import com.fernandocejas.android10.sample.presentation.model.UserModel
 import com.fernandocejas.android10.sample.presentation.view.UserDetailsView
 import com.fernandocejas.frodo.annotation.RxLogSubscriber
+import rx.Subscriber
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -100,7 +101,7 @@ constructor(@Named("userDetails") private val getUserDetailsUseCase: UseCase,
     }
 
     private fun getUserDetails() {
-        this.getUserDetailsUseCase.execute(UserDetailsSubscriber())
+        this.getUserDetailsUseCase.execute(UserDetailsSubscriber() as Subscriber<Any>)
     }
 
     @RxLogSubscriber

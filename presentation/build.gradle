@@ -63,6 +63,13 @@ android {
   }
 }
 
+sourceSets {
+  main {
+    compileClasspath += configurations.provided
+  }
+  main.java.srcDirs += 'src/main/kotlin'
+}
+
 kapt {
   generateStubs = true
 }

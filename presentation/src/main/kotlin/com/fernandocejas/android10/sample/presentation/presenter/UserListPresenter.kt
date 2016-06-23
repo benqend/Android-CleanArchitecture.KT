@@ -25,6 +25,7 @@ import com.fernandocejas.android10.sample.presentation.internal.di.PerActivity
 import com.fernandocejas.android10.sample.presentation.mapper.UserModelDataMapper
 import com.fernandocejas.android10.sample.presentation.model.UserModel
 import com.fernandocejas.android10.sample.presentation.view.UserListView
+import rx.Subscriber
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -103,7 +104,7 @@ constructor(@Named("userList") private val getUserListUseCase: UseCase,
     }
 
     private fun getUserList() {
-        this.getUserListUseCase.execute(UserListSubscriber())
+        this.getUserListUseCase.execute(UserListSubscriber() as Subscriber<Any>)
     }
 
     private inner class UserListSubscriber : DefaultSubscriber<List<User>>() {
