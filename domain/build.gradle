@@ -14,12 +14,6 @@ configurations {
     provided
 }
 
-sourceSets {
-    main {
-        compileClasspath += configurations.provided
-    }
-    main.java.srcDirs += 'src/main/kotlin'
-}
 
 dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
