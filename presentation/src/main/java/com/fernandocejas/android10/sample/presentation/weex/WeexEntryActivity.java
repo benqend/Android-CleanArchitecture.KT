@@ -33,7 +33,7 @@ public class WeexEntryActivity extends Activity implements IWXRenderListener {
          * width 为-1 默认全屏，可以自己定制。
          * height =-1 默认全屏，可以自己定制。
          */
-        mWXSDKInstance.render("WXSample", WXFileUtils.loadFileContent("list-demo.js", this), null, null, -1, -1, WXRenderStrategy.APPEND_ASYNC);
+        mWXSDKInstance.render("WXSample", WXFileUtils.loadFileContent("main_entry.js", this), null, null, -1, -1, WXRenderStrategy.APPEND_ASYNC);
     }
 
     @Override
