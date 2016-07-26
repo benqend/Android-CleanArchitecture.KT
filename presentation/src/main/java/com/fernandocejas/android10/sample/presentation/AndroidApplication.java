@@ -19,7 +19,10 @@ import android.app.Application;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
+import com.fernandocejas.android10.sample.presentation.weex.ImageAdapter;
 import com.squareup.leakcanary.LeakCanary;
+import com.taobao.weex.InitConfig;
+import com.taobao.weex.WXSDKEngine;
 
 /**
  * Android Main Application
@@ -32,6 +35,8 @@ public class AndroidApplication extends Application {
     super.onCreate();
     this.initializeInjector();
     this.initializeLeakDetection();
+    InitConfig config=new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
+    WXSDKEngine.initialize(this,config);
   }
 
   private void initializeInjector() {
