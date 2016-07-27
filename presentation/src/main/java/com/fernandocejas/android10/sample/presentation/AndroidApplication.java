@@ -20,9 +20,14 @@ import com.fernandocejas.android10.sample.presentation.internal.di.components.Ap
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
 import com.fernandocejas.android10.sample.presentation.weex.ImageAdapter;
+import com.fernandocejas.android10.sample.presentation.weex.extend.component.RichText;
+import com.fernandocejas.android10.sample.presentation.weex.extend.module.MyModule;
+import com.fernandocejas.android10.sample.presentation.weex.extend.module.RenderModule;
+import com.fernandocejas.android10.sample.presentation.weex.extend.module.WXEventModule;
 import com.squareup.leakcanary.LeakCanary;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
+import com.taobao.weex.common.WXException;
 
 /**
  * Android Main Application
@@ -35,8 +40,22 @@ public class AndroidApplication extends Application {
     super.onCreate();
     this.initializeInjector();
     this.initializeLeakDetection();
+    initWeex();
+  }
+
+  private void initWeex() {
     InitConfig config=new InitConfig.Builder().setImgAdapter(new ImageAdapter()).build();
     WXSDKEngine.initialize(this,config);
+    try {
+      WXSDKEngine.registerComponent("richtext", RichText.class);
+      WXSDKEngine.registerModule("render", RenderModule.class);
+      WXSDKEngine.registerModule("event", WXEventModule.class);
+
+      WXSDKEngine.registerModule("myModule", MyModule.class);
+
+    } catch (WXException e) {
+      e.printStackTrace();
+    }
   }
 
   private void initializeInjector() {

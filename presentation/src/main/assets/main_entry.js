@@ -44,20 +44,56 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/f6500aaea26a476a004434f256598154", [], function(__weex_require__, __weex_exports__, __weex_module__){
+	;__weex_define__("@weex-component/main_entry", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	    __weex_module__.exports = {
 	        data: function () {return {
-	            url:"http://www.android10.org/",
-	            loadTip:"Load Sample Data",
+	            url: "http://www.android10.org/",
+	            loadTip: "Load Sample Data",
 	            show: true,
-	            pictureUrl:"http://fernandocejas.com/wp-content/uploads/2014/08/android10_coder_logo.png"
+	            pictureUrl: "http://fernandocejas.com/wp-content/uploads/2014/08/android10_coder_logo.png"
 	        }},
 	        methods: {
-	            clicked: function() {
-	                console.log("clicked");
+	            redirect: function () {
+	                __weex_require__('@weex-module/event').openURL(this.baseURL + "hello.js");
 	            }
+	        },
+	        created: function () {
+	            var bundleUrl = this.$getConfig().bundleUrl;
+	            bundleUrl = new String(bundleUrl);
+	            console.log('hit', bundleUrl);
+	            var nativeBase;
+	            var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
+
+	            var isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
+	            if (isAndroidAssets) {
+	                nativeBase = 'file://assets/';
+	            }
+	            else if (isiOSAssets) {
+	                // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
+	                // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
+	                nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
+	            }
+	            else {
+	                var host = 'localhost:12580';
+	                var matches = /\/\/([^\/]+?)\//.exec(this.$getConfig().bundleUrl);
+	                if (matches && matches.length >= 2) {
+	                    host = matches[1];
+	                }
+	                nativeBase = 'http://' + host + '/' + this.dir + '/build/';
+	            }
+	            var h5Base = './index.html?page=./' + this.dir + '/build/';
+	            // in Native
+	            var base = nativeBase;
+	            if (typeof window === 'object') {
+	                // in Browser or WebView
+	                base = h5Base;
+	            }
+
+	            //fix me 移动平台无法获取正确的bundleURL,先写死
+	            base = 'file://assets/';
+	            this.baseURL = base;
 	        }
 	    }
 
@@ -83,11 +119,11 @@
 	      "classList": [
 	        "thumb"
 	      ],
-          "events": {
-            "click": "clicked"
-          },
 	      "attr": {
 	        "src": function () {return this.pictureUrl}
+	      },
+	      "events": {
+	        "click": "redirect"
 	      }
 	    },
 	    {
@@ -96,7 +132,7 @@
 	        "textAlign": "center"
 	      },
 	      "events": {
-	        "click": "clicked"
+	        "click": "redirect"
 	      },
 	      "attr": {
 	        "value": function () {return this.loadTip}
@@ -112,7 +148,7 @@
 	  }
 	})
 	})
-	;__weex_bootstrap__("@weex-component/f6500aaea26a476a004434f256598154", {
+	;__weex_bootstrap__("@weex-component/main_entry", {
 	  "transformerVersion": "0.3.1"
 	},undefined)
 
