@@ -1,4 +1,4 @@
-package com.fernandocejas.android10.sample.presentation.weex;
+package com.fernandocejas.android10.sample.presentation.weex.extend.adapter;
 
 import android.text.TextUtils;
 import android.widget.ImageView;

@@ -19,7 +19,7 @@ import android.app.Application;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerApplicationComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
-import com.fernandocejas.android10.sample.presentation.weex.ImageAdapter;
+import com.fernandocejas.android10.sample.presentation.weex.extend.adapter.ImageAdapter;
 import com.fernandocejas.android10.sample.presentation.weex.extend.component.RichText;
 import com.fernandocejas.android10.sample.presentation.weex.extend.module.MyModule;
 import com.fernandocejas.android10.sample.presentation.weex.extend.module.RenderModule;

@@ -15,7 +15,7 @@ import com.taobao.weex.utils.WXFileUtils;
  * @author jiangbenpeng
  * @date 7/26/16
  */
-public class WeexEntryActivity extends Activity implements IWXRenderListener {
+public class WXEntryActivity extends Activity implements IWXRenderListener {
 
     WXSDKInstance mWXSDKInstance;
 

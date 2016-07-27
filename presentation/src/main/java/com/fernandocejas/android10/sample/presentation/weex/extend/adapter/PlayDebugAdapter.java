@@ -1,4 +1,4 @@
-package com.fernandocejas.android10.sample.presentation.weex.extend;
+package com.fernandocejas.android10.sample.presentation.weex.extend.adapter;
 
 import android.app.Application;
 import android.content.Context;
