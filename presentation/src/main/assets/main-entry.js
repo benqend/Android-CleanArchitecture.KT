@@ -56,7 +56,7 @@
 	        }},
 	        methods: {
 	            redirect: function () {
-	                __weex_require__('@weex-module/event').openURL(this.baseURL + "hello.js");
+	                __weex_require__('@weex-module/event').openURL(this.baseURL + "list-basic.js");
 	            }
 	        },
 	        created: function () {
