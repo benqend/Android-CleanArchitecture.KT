@@ -2,7 +2,6 @@ package com.fernandocejas.android10.sample.presentation.weex.extend;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONArray;
 import com.fernandocejas.android10.sample.presentation.R;
 import com.fernandocejas.android10.sample.presentation.weex.constants.Constants;
 import com.fernandocejas.android10.sample.presentation.weex.https.HotRefreshManager;

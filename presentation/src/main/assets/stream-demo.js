@@ -44,151 +44,239 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	;__weex_define__("@weex-component/e78078e070899e193535f97b752654ac", [], function(__weex_require__, __weex_exports__, __weex_module__){
+	;__weex_define__("@weex-component/d2e442a2954e1d4641f5637c90cd58c0", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
-	    __webpack_require__(1);
-	    __weex_module__.exports = {
-	        methods: {
-	            onappear: function (e) {
-	                var appearId = this.rows[e.target.attr.index].id;
-	                nativeLog('+++++', appearId);
-	                var appearIds = this.appearIds;
-	                appearIds.push(appearId);
-	                this.getMinAndMaxIds(appearIds);
-	            },
-	            ondisappear:function (e) {
-	                var disAppearId = this.rows[e.target.attr.index].id;
-	                nativeLog('+++++', disAppearId);
-	                var appearIds = this.appearIds;
-	                var index = appearIds.indexOf(disAppearId);
-	                if (index > -1) {
-	                    appearIds.splice(index, 1);
-	                }
-	                this.getMinAndMaxIds(appearIds);
-	            },
-	            getMinAndMaxIds:function (appearIds) {
-	                appearIds.sort(function(a, b) {
-	                    return a - b;
-	                });
-	                this.appearIds = appearIds;
-	                this.appearMax = appearIds[appearIds.length - 1];
-	                this.appearMin = appearIds[0];
-	            }
-	        },
-	        data: function () {return {
-	            appearMin:1,
-	            appearMax:1,
-	            appearIds:[],
-	            getResult:[{id:1, full_name:"Simon Hill", followers:7484},
-	            {id:2,full_name:"Peter Graham",followers:7019}]
-	        }},
-	        ready: function() {
-	            var stream = __weex_require__('@weex-module/stream')
-	            var me = this;
-	            var GET_URL = 'http://www.android10.org/myapi/users.json'
+	  __webpack_require__(1);
 
-	            stream.fetch({
-	                method: 'GET',
-	                url: GET_URL,
-	                type: 'json'
-	            }, function(ret) {
-	                if(typeof ret === 'string'){
-	                    ret = JSON.parse(ret);
-	                }
-	                if(!ret.ok){
-	                    me.getResult = "request failed";
-	                }else{
-	                    console.log('get:'+ret);
-	                     me.getResult = JSON.parse(ret.data);
-	                }
-	            }, function(response) {
-	                console.log('get in progress:'+response.length);
-	            });
+	  __weex_module__.exports = {
+	    data: function () {return {
+	      getResult: 'loading...',
+	      postResult: 'loading...',
+	      putResult: 'loading...',
+	      deleteResult: 'loading...',
+	      headResult: 'loading...',
+	      patchResult: 'loading...',
+	    }},
+	    ready: function() {
+	      var stream = __weex_require__('@weex-module/stream');
+	      var me = this;
+	      var GET_URL = 'http://httpbin.org/get';
+	      var POST_URL = 'http://httpbin.org/post';
+	      var PUT_URL = 'http://httpbin.org/put';
+	      var DELETE_URL = 'http://httpbin.org/delete';
+	      var HEAD_URL = 'http://httpbin.org/status/418';
+	      var PATCH_URL = 'http://httpbin.org/patch';
+	      var TEST_URL = "http://www.android10.org/myapi/users.json";
+
+	      stream.fetch({
+	        method: 'GET',
+	        url: TEST_URL,
+	        type:'json'
+	      }, function(ret) {
+	        if(typeof ret === 'string'){
+	          ret = JSON.parse(ret);
 	        }
+	        if(!ret.ok){
+	          me.getResult = "request failed";
+	        }else{
+	          console.log('get:'+ret);
+	          me.getResult = ret.data;
+	        }
+	      },function(response){
+	        console.log('get in progress:'+response.length);
+	        me.getResult = "bytes received:"+response.length;
+	      });
+
+	      stream.fetch({
+	        method: 'POST',
+	        url: POST_URL,
+	        type:'json'
+	      }, function(ret) {
+	        if(typeof ret === 'string'){
+	          ret = JSON.parse(ret);
+	        }
+	        if(!ret.ok){
+	          me.postResult = "request failed";
+	        }else{
+	          console.log('get:'+ret);
+	          me.postResult = ret.data;
+	        }
+	      },function(response){
+	        console.log('get in progress:'+response.length);
+	        me.postResult = "bytes received:"+response.length;
+	      });
+
+	      stream.fetch({
+	        method: 'PUT',
+	        url: PUT_URL,
+	        type:'json'
+	      }, function(ret) {
+	        if(typeof ret === 'string'){
+	          ret = JSON.parse(ret);
+	        }
+	        if(!ret.ok){
+	          me.putResult = "request failed";
+	        }else{
+	          console.log('get:'+ret);
+	          me.putResult = ret.data;
+	        }
+	      });
+
+	      stream.fetch({
+	        method: 'DELETE',
+	        url: DELETE_URL,
+	        type:'json'
+	      }, function(ret) {
+	        if(typeof ret === 'string'){
+	          ret = JSON.parse(ret);
+	        }
+	        if(!ret.ok){
+	          me.deleteResult = "request failed";
+	        }else{
+	          console.log('get:'+ret);
+	          me.deleteResult = ret.data;
+	        }
+	      },function(response){
+	        console.log('get in progress:'+response.length);
+	        me.deleteResult = "bytes received:"+response.length;
+	      });
+
+	      stream.fetch({
+	        method: 'HEAD',
+	        url: HEAD_URL,
+	        type:'json'
+	      }, function(ret) {
+	        if(ret.statusText !== 'I\'m a teapot'){
+	          me.headResult = "request failed";
+	        }else{
+	          console.log('get:'+ret);
+	          me.headResult = ret.statusText;
+	        }
+	      },function(response){
+	        console.log('get in progress:'+response.length);
+	        me.headResult = "bytes received:"+response.length;
+	      });
+
+	      stream.fetch({
+	        method: 'PATCH',
+	        url: PATCH_URL,
+	        type:'json'
+	      }, function(ret) {
+	        if(typeof ret === 'string'){
+	          ret = JSON.parse(ret);
+	        }
+	        if(!ret.ok){
+	          me.patchResult = "request failed";
+	        }else{
+	          console.log('get:'+ret);
+	          me.patchResult = ret.data;
+	        }
+	      });
 	    }
+	  };
 
 	;__weex_module__.exports.template = __weex_module__.exports.template || {}
 	;Object.assign(__weex_module__.exports.template, {
-	  "type": "div",
+	  "type": "scroller",
 	  "children": [
 	    {
-	      "type": "list",
-	      "classList": [
-	        "list"
-	      ],
+	      "type": "wxc-panel",
+	      "attr": {
+	        "title": "stream.fetch",
+	        "type": "primary"
+	      },
 	      "children": [
 	        {
-	          "type": "cell",
-	          "append": "tree",
-	          "events": {
-	            "appear": "onappear",
-	            "disappear": "ondisappear"
+	          "type": "wxc-panel",
+	          "attr": {
+	            "title": "method = GET"
 	          },
-	          "classList": [
-	            "row"
-	          ],
-	          "repeat": function () {return this.getResult},
 	          "children": [
 	            {
-	              "type": "div",
-	              "classList": [
-	                "item"
-	              ],
-	              "children": [
-	                {
-	                  "type": "text",
-	                  "classList": [
-	                    "item-title"
-	                  ],
-	                  "attr": {
-	                    "value": function () {return this.full_name}
-	                  }
-	                }
-	              ]
+	              "type": "text",
+	              "attr": {
+	                "value": function () {return this.getResult}
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "wxc-panel",
+	          "attr": {
+	            "title": "method = POST"
+	          },
+	          "children": [
+	            {
+	              "type": "text",
+	              "attr": {
+	                "value": function () {return this.postResult}
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "wxc-panel",
+	          "attr": {
+	            "title": "method = PUT"
+	          },
+	          "children": [
+	            {
+	              "type": "text",
+	              "attr": {
+	                "value": function () {return this.putResult}
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "wxc-panel",
+	          "attr": {
+	            "title": "method = DELETE"
+	          },
+	          "children": [
+	            {
+	              "type": "text",
+	              "attr": {
+	                "value": function () {return this.deleteResult}
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "wxc-panel",
+	          "attr": {
+	            "title": "method = HEAD"
+	          },
+	          "children": [
+	            {
+	              "type": "text",
+	              "attr": {
+	                "value": function () {return this.headResult}
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "wxc-panel",
+	          "attr": {
+	            "title": "method = PATCH"
+	          },
+	          "children": [
+	            {
+	              "type": "text",
+	              "attr": {
+	                "value": function () {return this.patchResult}
+	              }
 	            }
 	          ]
 	        }
 	      ]
-	    },
-	    {
-	      "type": "text",
-	      "classList": [
-	        "count"
-	      ],
-	      "attr": {
-	        "value": function () {return 'Appear items:' + (this.appearMin) + ' - ' + (this.appearMax)}
-	      }
 	    }
 	  ]
 	})
-	;__weex_module__.exports.style = __weex_module__.exports.style || {}
-	;Object.assign(__weex_module__.exports.style, {
-	  "list": {
-	    "height": 850
-	  },
-	  "count": {
-	    "fontSize": 48,
-	    "margin": 10
-	  },
-	  "indicator": {
-	    "height": 40,
-	    "width": 40,
-	    "color": "#45b5f0"
-	  },
-	  "row": {
-	    "width": 750
-	  },
-	  "item": {
-	    "justifyContent": "center",
-	    "borderBottomWidth": 2,
-	    "borderBottomColor": "#c0c0c0",
-	    "height": 100,
-	    "padding": 20
-	  }
 	})
-	})
-	;__weex_bootstrap__("@weex-component/e78078e070899e193535f97b752654ac", {
+	;__weex_bootstrap__("@weex-component/d2e442a2954e1d4641f5637c90cd58c0", {
 	  "transformerVersion": "0.3.1"
 	},undefined)
 
