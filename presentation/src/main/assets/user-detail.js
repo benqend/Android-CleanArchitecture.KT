@@ -44,56 +44,34 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	;__weex_define__("@weex-component/f69679f17fe5edfd02fc87da79e407f7", [], function(__weex_require__, __weex_exports__, __weex_module__){
+	;__weex_define__("@weex-component/9c59a2970bbf80ae36ad623e556632d4", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	    __webpack_require__(1);
+	    function getQueryStringByName(url, name){
+	    var result = url.match(new RegExp("[\?\&]" + name+ "=([^\&]+)","i"));
+	    if(result == null || result.length < 1){
+	    return "";
+	    }
+	    return result[1];
+	    }
 	    __weex_module__.exports = {
-	        methods: {
-	            onappear: function (e) {
-	                var appearId = this.rows[e.target.attr.index].id;
-	                nativeLog('+++++', appearId);
-	                var appearIds = this.appearIds;
-	                appearIds.push(appearId);
-	                this.getMinAndMaxIds(appearIds);
-	            },
-	            ondisappear:function (e) {
-	                var disAppearId = this.rows[e.target.attr.index].id;
-	                nativeLog('+++++', disAppearId);
-	                var appearIds = this.appearIds;
-	                var index = appearIds.indexOf(disAppearId);
-	                if (index > -1) {
-	                    appearIds.splice(index, 1);
-	                }
-	                this.getMinAndMaxIds(appearIds);
-	            },
-	            getMinAndMaxIds:function (appearIds) {
-	                appearIds.sort(function(a, b) {
-	                    return a - b;
-	                });
-	                this.appearIds = appearIds;
-	                this.appearMax = appearIds[appearIds.length - 1];
-	                this.appearMin = appearIds[0];
-	            },
-	            redirect: function (e) {
-	                id = e.target.attr.rownumber
-	                console.log("click item id: " + id);
-	                clickedUrl = this.baseURL + "user-detail.js?id=" + id;
-	                __weex_require__('@weex-module/event').openURL(clickedUrl);
-	            }
-	        },
 	        data: function () {return {
-	            appearMin:1,
-	            appearMax:1,
-	            appearIds:[],
-	            getResult:[{id:1, full_name:"Simon Hill", followers:7484},
-	            {id:2,full_name:"Peter Graham",followers:7019}],
-	            clickedUrl:"ide"
+	          user_detail:{
+	            id: 1,
+	            cover_url: "http://www.android10.org/myapi/cover_1.jpg",
+	            full_name: "Simon Hill",
+	            description: "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.",
+	            followers: 7484,
+	            email: "jcooper@babbleset.edu"
+	            }
 	        }},
 	        ready: function() {
+	            var bundleUrl = this.$getConfig().bundleUrl;
 	            var stream = __weex_require__('@weex-module/stream')
 	            var me = this;
-	            var GET_URL = 'http://www.android10.org/myapi/users.json'
+	            var id = getQueryStringByName(bundleUrl, 'id');
+	            var GET_URL = 'http://www.android10.org/myapi/user_' + id + '.json'
 
 	            stream.fetch({
 	                method: 'GET',
@@ -107,44 +85,11 @@
 	                    me.getResult = "request failed";
 	                }else{
 	                    console.log('get:'+ret);
-	                    me.getResult = JSON.parse(ret.data);
+	                    me.user_detail = JSON.parse(ret.data);
 	                }
 	            }, function(response) {
 	                console.log('get in progress:'+response.length);
 	            });
-	        },
-	      created: function () {
-	            var bundleUrl = this.$getConfig().bundleUrl;
-	            bundleUrl = new String(bundleUrl);
-	            console.log('hit', bundleUrl);
-	            var nativeBase;
-	            var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
-
-	            var isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
-	            if (isAndroidAssets) {
-	                nativeBase = 'file://assets/';
-	            }
-	            else if (isiOSAssets) {
-	                // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
-	                // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
-	                nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
-	            }
-	            else {
-	                var host = 'localhost:12580';
-	                var matches = /\/\/([^\/]+?)\//.exec(this.$getConfig().bundleUrl);
-	                if (matches && matches.length >= 2) {
-	                    host = matches[1];
-	                }
-	                nativeBase = 'http://' + host + '/' + this.dir + '/build/';
-	            }
-	            var h5Base = './index.html?page=./' + this.dir + '/build/';
-	            // in Native
-	            var base = nativeBase;
-	            if (typeof window === 'object') {
-	                // in Browser or WebView
-	                base = h5Base;
-	            }
-	            this.baseURL = 'file://assets/';
 	        }
 	    }
 
@@ -153,48 +98,13 @@
 	  "type": "div",
 	  "children": [
 	    {
-	      "type": "list",
+	      "type": "image",
 	      "classList": [
-	        "list"
+	        "img"
 	      ],
-	      "children": [
-	        {
-	          "type": "cell",
-	          "append": "tree",
-	          "events": {
-	            "appear": "onappear",
-	            "click": "redirect",
-	            "disappear": "ondisappear"
-	          },
-	          "classList": [
-	            "row"
-	          ],
-	          "repeat": function () {return this.getResult},
-	          "attr": {
-	            "rownumber": function () {return this.id},
-	            "index": function () {return this.$index}
-	          },
-	          "children": [
-	            {
-	              "type": "div",
-	              "classList": [
-	                "item"
-	              ],
-	              "children": [
-	                {
-	                  "type": "text",
-	                  "classList": [
-	                    "item-title"
-	                  ],
-	                  "attr": {
-	                    "value": function () {return this.full_name}
-	                  }
-	                }
-	              ]
-	            }
-	          ]
-	        }
-	      ]
+	      "attr": {
+	        "src": function () {return this.user_detail.cover_url}
+	      }
 	    },
 	    {
 	      "type": "text",
@@ -202,38 +112,41 @@
 	        "count"
 	      ],
 	      "attr": {
-	        "value": function () {return 'Appear items:' + (this.appearMin) + ' - ' + (this.appearMax)}
+	        "value": function () {return 'Email: ' + (this.user_detail.email)}
+	      }
+	    },
+	    {
+	      "type": "text",
+	      "classList": [
+	        "count"
+	      ],
+	      "attr": {
+	        "value": function () {return 'Followers: ' + (this.user_detail.followers)}
+	      }
+	    },
+	    {
+	      "type": "text",
+	      "classList": [
+	        "count"
+	      ],
+	      "attr": {
+	        "value": function () {return 'Description: ' + (this.user_detail.description)}
 	      }
 	    }
 	  ]
 	})
 	;__weex_module__.exports.style = __weex_module__.exports.style || {}
 	;Object.assign(__weex_module__.exports.style, {
-	  "list": {
-	    "height": 850
+	  "img": {
+	    "height": 240
 	  },
 	  "count": {
-	    "fontSize": 48,
+	    "fontSize": 18,
 	    "margin": 10
-	  },
-	  "indicator": {
-	    "height": 40,
-	    "width": 40,
-	    "color": "#45b5f0"
-	  },
-	  "row": {
-	    "width": 750
-	  },
-	  "item": {
-	    "justifyContent": "center",
-	    "borderBottomWidth": 2,
-	    "borderBottomColor": "#c0c0c0",
-	    "height": 100,
-	    "padding": 20
 	  }
 	})
 	})
-	;__weex_bootstrap__("@weex-component/f69679f17fe5edfd02fc87da79e407f7", {
+	;__weex_bootstrap__("@weex-component/9c59a2970bbf80ae36ad623e556632d4", {
 	  "transformerVersion": "0.3.1"
 	},undefined)
 
@@ -733,7 +646,7 @@
 	                } else {
 	                    this.$emit('alarm', Object.assign({}, this.time));
 	                }
-	                this._app.updateActions(); 
+	                this._app.updateActions();
 	            }
 	        },
 	        format: function(str) {
@@ -819,7 +732,7 @@
 	        if (this.interval > 0
 	                && this.step > 0
 	                && this.duration > 0) {
-	            this.nextTick();    
+	            this.nextTick();
 	        }
 	    },
 	    methods: {
@@ -917,7 +830,7 @@
 	          //导航条高度
 	          height: 88,
 
-	          //导航条标题 
+	          //导航条标题
 	          title: "",
 
 	          //导航条标题颜色
@@ -1214,7 +1127,7 @@
 	                  tabItem.visibility = 'hidden';
 	                }
 	              }
-	            },  
+	            },
 	        }
 	    }
 

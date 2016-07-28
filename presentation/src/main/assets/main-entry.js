@@ -56,7 +56,7 @@
 	        }},
 	        methods: {
 	            redirect: function () {
-	                __weex_require__('@weex-module/event').openURL(this.baseURL + "user-list.js");
+	                __weex_require__('@weex-module/event').openURL(this.baseURL + "user-list.js?id=9");
 	            }
 	        },
 	        created: function () {
