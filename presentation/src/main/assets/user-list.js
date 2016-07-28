@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	;__weex_define__("@weex-component/f69679f17fe5edfd02fc87da79e407f7", [], function(__weex_require__, __weex_exports__, __weex_module__){
+	;__weex_define__("@weex-component/f25d216bb255ec0491dcde79bd2dd509", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	    __webpack_require__(1);
@@ -195,22 +195,17 @@
 	          ]
 	        }
 	      ]
-	    },
-	    {
-	      "type": "text",
-	      "classList": [
-	        "count"
-	      ],
-	      "attr": {
-	        "value": function () {return 'Appear items:' + (this.appearMin) + ' - ' + (this.appearMax)}
-	      }
 	    }
 	  ]
 	})
 	;__weex_module__.exports.style = __weex_module__.exports.style || {}
 	;Object.assign(__weex_module__.exports.style, {
 	  "list": {
-	    "height": 850
+	    "flexDirection": "column",
+	    "overflow": "hidden",
+	    "width": 750,
+	    "height": 1000,
+	    "backgroundColor": "#ffffff"
 	  },
 	  "count": {
 	    "fontSize": 48,
@@ -233,7 +228,7 @@
 	  }
 	})
 	})
-	;__weex_bootstrap__("@weex-component/f69679f17fe5edfd02fc87da79e407f7", {
+	;__weex_bootstrap__("@weex-component/f25d216bb255ec0491dcde79bd2dd509", {
 	  "transformerVersion": "0.3.1"
 	},undefined)
 
