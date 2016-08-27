@@ -44,75 +44,113 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	;__weex_define__("@weex-component/a35f04a45d2f4aba2362fe51748ba920", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/ce6cbbf3e5c194e7b60b42c1ded2db2d", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
-	  __webpack_require__(1);
-	  __weex_module__.exports = {
-	    methods: {
-	      onappear: function (e) {
-	        var appearId = this.rows[e.target.attr.index].id;
-	        nativeLog('+++++', appearId);
-	        var appearIds = this.appearIds;
-	        appearIds.push(appearId);
-	        this.getMinAndMaxIds(appearIds);
-	      },
-	      ondisappear:function (e) {
-	        var disAppearId = this.rows[e.target.attr.index].id;
-	        nativeLog('+++++', disAppearId);
-	        var appearIds = this.appearIds;
-	        var index = appearIds.indexOf(disAppearId);
-	        if (index > -1) {
-	          appearIds.splice(index, 1);
+	    __webpack_require__(1);
+	    __weex_module__.exports = {
+	        methods: {
+	            onappear: function (e) {
+	                var appearId = this.rows[e.target.attr.index].id;
+	                nativeLog('+++++', appearId);
+	                var appearIds = this.appearIds;
+	                appearIds.push(appearId);
+	                this.getMinAndMaxIds(appearIds);
+	            },
+	            ondisappear:function (e) {
+	                var disAppearId = this.rows[e.target.attr.index].id;
+	                nativeLog('+++++', disAppearId);
+	                var appearIds = this.appearIds;
+	                var index = appearIds.indexOf(disAppearId);
+	                if (index > -1) {
+	                    appearIds.splice(index, 1);
+	                }
+	                this.getMinAndMaxIds(appearIds);
+	            },
+	            getMinAndMaxIds:function (appearIds) {
+	                appearIds.sort(function(a, b) {
+	                    return a - b;
+	                });
+	                this.appearIds = appearIds;
+	                this.appearMax = appearIds[appearIds.length - 1];
+	                this.appearMin = appearIds[0];
+	            },
+	            redirect: function (e) {
+	                id = e.target.attr.rownumber
+	                console.log("click item id: " + id);
+	                clickedUrl = this.baseURL + "user-detail.js?id=" + id;
+	                __weex_require__('@weex-module/event').openURL(clickedUrl);
+	            },
+	            loadNext: function(e) {
+	                 console.log("load more");
+	                 var modal = __weex_require__('@weex-module/modal');
+	                 modal.toast({
+	                   'message': 'msg',
+	                   'duration': 'duration'
+	                 });
+	                 this.getResult = [{"id":1,"full_name":"Simon Hill","followers":7484},
+	                                   {"id":2,"full_name":"Peter Graham","followers":7019}];
+	            }
+
+	        },
+	        data: function () {return {
+	            appearMin:1,
+	            appearMax:1,
+	            appearIds:[],
+	            getResult:[{"id":1,"full_name":"Simon Hill","followers":7484},
+	            {"id":2,"full_name":"Peter Graham","followers":7019},
+	            {"id":3,"full_name":"Angelina Johnston","followers":2700},
+	            {"id":4,"full_name":"Josh Hunt","followers":3322},
+	            {"id":5,"full_name":"Victor Wallace","followers":5664},
+	            {"id":6,"full_name":"Lorena Bishop","followers":4838},
+	            {"id":7,"full_name":"Jack Daniels","followers":3945},
+	            {"id":8,"full_name":"Montgomery Burns","followers":327},
+	            {"id":9,"full_name":"Scott Matt","followers":3442},
+	            {"id":10,"full_name":"John Sanchez","followers":4523},
+	            {"id":11,"full_name":"Roger Marshall","followers":5134},
+	            {"id":12,"full_name":"Pedro Garcia","followers":1381}],
+	            clickedUrl:"ide"
+	        }},
+	        ready: function() {
+	            var stream = __weex_require__('@weex-module/stream')
+	            var me = this;
+	            var GET_URL = 'http://www.android10.org/myapi/users.json'
+
+	        },
+	        created: function () {
+	            var bundleUrl = this.$getConfig().bundleUrl;
+	            bundleUrl = new String(bundleUrl);
+	            console.log('hit', bundleUrl);
+	            var nativeBase;
+	            var isAndroidAssets = bundleUrl.indexOf('file://assets/') >= 0;
+
+	            var isiOSAssets = bundleUrl.indexOf('file:///') >= 0 && bundleUrl.indexOf('WeexDemo.app') > 0;
+	            if (isAndroidAssets) {
+	                nativeBase = 'file://assets/';
+	            }
+	            else if (isiOSAssets) {
+	                // file:///var/mobile/Containers/Bundle/Application/{id}/WeexDemo.app/
+	                // file:///Users/{user}/Library/Developer/CoreSimulator/Devices/{id}/data/Containers/Bundle/Application/{id}/WeexDemo.app/
+	                nativeBase = bundleUrl.substring(0, bundleUrl.lastIndexOf('/') + 1);
+	            }
+	            else {
+	                var host = 'localhost:12580';
+	                var matches = /\/\/([^\/]+?)\//.exec(this.$getConfig().bundleUrl);
+	                if (matches && matches.length >= 2) {
+	                    host = matches[1];
+	                }
+	                nativeBase = 'http://' + host + '/' + this.dir + '/build/';
+	            }
+	            var h5Base = './index.html?page=./' + this.dir + '/build/';
+	            // in Native
+	            var base = nativeBase;
+	            if (typeof window === 'object') {
+	                // in Browser or WebView
+	                base = h5Base;
+	            }
+	            this.baseURL = 'file://assets/';
 	        }
-	        this.getMinAndMaxIds(appearIds);
-	      },
-	      getMinAndMaxIds:function (appearIds) {
-	        appearIds.sort(function(a, b) {
-	          return a - b;
-	        });
-	        this.appearIds = appearIds;
-	        this.appearMax = appearIds[appearIds.length - 1];
-	        this.appearMin = appearIds[0];
-	      }
-	    },
-	    data: function () {return {
-	      appearMin:1,
-	      appearMax:1,
-	      appearIds:[],
-	      rows:[
-	        {id: 1},
-	        {id: 2},
-	        {id: 3},
-	        {id: 4},
-	        {id: 5},
-	        {id: 6},
-	        {id: 7},
-	        {id: 8},
-	        {id: 9},
-	        {id: 10},
-	        {id: 11},
-	        {id: 12},
-	        {id: 13},
-	        {id: 14},
-	        {id: 15},
-	        {id: 16},
-	        {id: 17},
-	        {id: 18},
-	        {id: 19},
-	        {id: 20},
-	        {id: 21},
-	        {id: 22},
-	        {id: 23},
-	        {id: 24},
-	        {id: 25},
-	        {id: 26},
-	        {id: 27},
-	        {id: 28},
-	        {id: 29}
-	      ]
-	    }}
-	  }
+	    }
 
 	;__weex_module__.exports.template = __weex_module__.exports.template || {}
 	;Object.assign(__weex_module__.exports.template, {
@@ -123,19 +161,41 @@
 	      "classList": [
 	        "list"
 	      ],
+	      "attr": {
+	        "loadmoreoffset": "10"
+	      },
+	      "events": {
+	        "loadmore": "loadNext"
+	      },
 	      "children": [
+	        {
+	          "type": "header",
+	          "children": [
+	            {
+	              "type": "text",
+	              "classList": [
+	                "item-title"
+	              ],
+	              "attr": {
+	                "value": "header"
+	              }
+	            }
+	          ]
+	        },
 	        {
 	          "type": "cell",
 	          "append": "tree",
 	          "events": {
 	            "appear": "onappear",
+	            "click": "redirect",
 	            "disappear": "ondisappear"
 	          },
 	          "classList": [
 	            "row"
 	          ],
-	          "repeat": function () {return this.rows},
+	          "repeat": function () {return this.getResult},
 	          "attr": {
+	            "rownumber": function () {return this.id},
 	            "index": function () {return this.$index}
 	          },
 	          "children": [
@@ -151,30 +211,53 @@
 	                    "item-title"
 	                  ],
 	                  "attr": {
-	                    "value": function () {return 'row ' + (this.id)}
+	                    "value": function () {return this.full_name}
 	                  }
 	                }
 	              ]
 	            }
 	          ]
+	        },
+	        {
+	          "type": "refresh",
+	          "children": [
+	            {
+	              "type": "text",
+	              "classList": [
+	                "item-title"
+	              ],
+	              "attr": {
+	                "value": "refresh"
+	              }
+	            }
+	          ]
+	        },
+	        {
+	          "type": "loading",
+	          "children": [
+	            {
+	              "type": "text",
+	              "classList": [
+	                "item-title"
+	              ],
+	              "attr": {
+	                "value": "loading"
+	              }
+	            }
+	          ]
 	        }
 	      ]
-	    },
-	    {
-	      "type": "text",
-	      "classList": [
-	        "count"
-	      ],
-	      "attr": {
-	        "value": function () {return 'Appear items:' + (this.appearMin) + ' - ' + (this.appearMax)}
-	      }
 	    }
 	  ]
 	})
 	;__weex_module__.exports.style = __weex_module__.exports.style || {}
 	;Object.assign(__weex_module__.exports.style, {
 	  "list": {
-	    "height": 850
+	    "flexDirection": "column",
+	    "overflow": "hidden",
+	    "width": 750,
+	    "height": 1200,
+	    "backgroundColor": "#ffffff"
 	  },
 	  "count": {
 	    "fontSize": 48,
@@ -197,7 +280,7 @@
 	  }
 	})
 	})
-	;__weex_bootstrap__("@weex-component/a35f04a45d2f4aba2362fe51748ba920", {
+	;__weex_bootstrap__("@weex-component/ce6cbbf3e5c194e7b60b42c1ded2db2d", {
 	  "transformerVersion": "0.3.1"
 	},undefined)
 
@@ -205,28 +288,24 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	;__weex_define__("@weex-component/index", [], function(__weex_require__, exports, __weex_module__){
+	__webpack_require__(2);
+	__webpack_require__(3);
+	__webpack_require__(4);
+	__webpack_require__(5);
+	__webpack_require__(6);
+	__webpack_require__(7);
+	__webpack_require__(8);
+	__webpack_require__(9);
+	__webpack_require__(10);
+	__webpack_require__(11);
+	__webpack_require__(12);
 
-	;
-	  __webpack_require__(2);
-	  __webpack_require__(3);
-	  __webpack_require__(4);
-	  __webpack_require__(5);
-	  __webpack_require__(6);
-	  __webpack_require__(7);
-	  __webpack_require__(8);
-	  __webpack_require__(9);
-	  __webpack_require__(10);
-	  __webpack_require__(11);
-	  __webpack_require__(12);
-
-	})
 
 /***/ },
 /* 2 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-button", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-button", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	  __weex_module__.exports = {
@@ -354,7 +433,7 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-hn", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-hn", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	  __weex_module__.exports = {
@@ -415,7 +494,7 @@
 /* 4 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-list-item", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-list-item", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	  __weex_module__.exports = {
@@ -473,7 +552,7 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-panel", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-panel", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	  __weex_module__.exports = {
@@ -583,7 +662,7 @@
 /* 6 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-tip", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-tip", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	  __weex_module__.exports = {
@@ -654,7 +733,7 @@
 /* 7 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-countdown", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-countdown", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	__weex_module__.exports = {
@@ -701,7 +780,7 @@
 	                } else {
 	                    this.$emit('alarm', Object.assign({}, this.time));
 	                }
-	                this._app.updateActions(); 
+	                this._app.updateActions();
 	            }
 	        },
 	        format: function(str) {
@@ -771,7 +850,7 @@
 /* 8 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-marquee", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-marquee", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	__weex_module__.exports = {
@@ -787,7 +866,7 @@
 	        if (this.interval > 0
 	                && this.step > 0
 	                && this.duration > 0) {
-	            this.nextTick();    
+	            this.nextTick();
 	        }
 	    },
 	    methods: {
@@ -872,7 +951,7 @@
 /* 9 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-navbar", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-navbar", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	    __weex_module__.exports = {
@@ -885,7 +964,7 @@
 	          //导航条高度
 	          height: 88,
 
-	          //导航条标题 
+	          //导航条标题
 	          title: "",
 
 	          //导航条标题颜色
@@ -1066,7 +1145,7 @@
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	;__weex_define__("@weex-component/wxc-navpage", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-navpage", [], function(__weex_require__, __weex_exports__, __weex_module__){
 	__webpack_require__(9);
 
 	;
@@ -1142,7 +1221,7 @@
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	;__weex_define__("@weex-component/wxc-tabbar", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-tabbar", [], function(__weex_require__, __weex_exports__, __weex_module__){
 	__webpack_require__(12);
 
 	;
@@ -1182,7 +1261,7 @@
 	                  tabItem.visibility = 'hidden';
 	                }
 	              }
-	            },  
+	            },
 	        }
 	    }
 
@@ -1262,7 +1341,7 @@
 /* 12 */
 /***/ function(module, exports) {
 
-	;__weex_define__("@weex-component/wxc-tabitem", [], function(__weex_require__, exports, __weex_module__){
+	;__weex_define__("@weex-component/wxc-tabitem", [], function(__weex_require__, __weex_exports__, __weex_module__){
 
 	;
 	    __weex_module__.exports = {

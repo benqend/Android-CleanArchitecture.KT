@@ -69,6 +69,7 @@ dependencies {
 
   compile project(':domain')
   compile project(':data')
+  compile project(':weex-sdk')
 
   apt presentationDependencies.daggerCompiler
   compile presentationDependencies.dagger
@@ -81,7 +82,6 @@ dependencies {
   compile 'com.squareup.okhttp:okhttp:2.3.0'
   compile 'com.squareup.okhttp:okhttp-ws:2.3.0'
   compile 'com.squareup.picasso:picasso:2.5.2'
-  compile 'com.taobao.android:weex_sdk:0.5.1@aar'
   provided presentationDependencies.javaxAnnotation
 
   androidTestCompile presentationTestDependencies.mockito
