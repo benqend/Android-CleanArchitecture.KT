@@ -85,7 +85,7 @@
 	                    me.getResult = "request failed";
 	                }else{
 	                    console.log('get:'+ret);
-	                    me.user_detail = JSON.parse(ret.data);
+	                    me.user_detail = ret.data;
 	                }
 	            }, function(response) {
 	                console.log('get in progress:'+response.length);
