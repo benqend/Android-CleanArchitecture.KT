@@ -16,15 +16,12 @@
 package com.fernandocejas.android10.sample.presentation;
 
 import android.app.Application;
-import com.fernandocejas.android10.sample.presentation.internal.di.components.ApplicationComponent;
-import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerApplicationComponent;
-import com.fernandocejas.android10.sample.presentation.internal.di.modules.ApplicationModule;
+
 import com.fernandocejas.android10.sample.presentation.weex.extend.adapter.ImageAdapter;
 import com.fernandocejas.android10.sample.presentation.weex.extend.component.RichText;
 import com.fernandocejas.android10.sample.presentation.weex.extend.module.MyModule;
 import com.fernandocejas.android10.sample.presentation.weex.extend.module.RenderModule;
 import com.fernandocejas.android10.sample.presentation.weex.extend.module.WXEventModule;
-import com.squareup.leakcanary.LeakCanary;
 import com.taobao.weex.InitConfig;
 import com.taobao.weex.WXSDKEngine;
 import com.taobao.weex.common.WXException;
@@ -34,12 +31,9 @@ import com.taobao.weex.common.WXException;
  */
 public class AndroidApplication extends Application {
 
-  private ApplicationComponent applicationComponent;
 
   @Override public void onCreate() {
     super.onCreate();
-    this.initializeInjector();
-    this.initializeLeakDetection();
     initWeex();
   }
 
@@ -55,22 +49,6 @@ public class AndroidApplication extends Application {
 
     } catch (WXException e) {
       e.printStackTrace();
-    }
-  }
-
-  private void initializeInjector() {
-    this.applicationComponent = DaggerApplicationComponent.builder()
-        .applicationModule(new ApplicationModule(this))
-        .build();
-  }
-
-  public ApplicationComponent getApplicationComponent() {
-    return this.applicationComponent;
-  }
-
-  private void initializeLeakDetection() {
-    if (BuildConfig.DEBUG) {
-      LeakCanary.install(this);
     }
   }
 }
