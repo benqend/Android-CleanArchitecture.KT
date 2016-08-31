@@ -2,7 +2,7 @@ Weex-Android中点击事件时序分析
 #### 简介
 本文介绍了Weex点击事件的流程图，其目的是通过点击事件的时序来阅读Weex的源码.
 准备工作
-()[]一文中介绍了Weex的一个入门demo，本文的时序图是在该demo的基础上进行断点调试所整理的，读者也可以自己用一个有点击事件的demo进行尝试.WXComponment中的addEvent中为添加点击事件的位置，读者可以在此加上断点，然后运行程序进行调试
+[Weex的入门体验小结](http://www.atatech.org/articles/59495)一文中介绍了Weex的一个入门demo，本文的时序图是在该demo的基础上进行断点调试所整理的，读者也可以自己用一个有点击事件的demo进行尝试.WXComponment中的addEvent中为添加点击事件的位置，读者可以在此加上断点，然后运行程序进行调试
 click的时序图：
 
 #### 注意

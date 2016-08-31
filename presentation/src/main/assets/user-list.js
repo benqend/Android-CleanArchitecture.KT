@@ -107,6 +107,7 @@
 	                    me.getResult = "request failed";
 	                }else{
 	                    console.log('get:'+ret);
+	                //    me.getResult = me.getResult.concat(ret.data);
 	                    me.getResult = ret.data;
 	                }
 	            }, function(response) {
