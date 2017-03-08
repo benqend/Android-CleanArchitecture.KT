@@ -36,7 +36,7 @@ interface RestApi {
     fun userEntityById(userId: Int): Observable<UserEntity>
 
     companion object {
-        val API_BASE_URL = "http://www.android10.org/myapi/"
+        val API_BASE_URL = "https://raw.githubusercontent.com/android10/Sample-Data/master/Android-CleanArchitecture/"
 
         /** Api url for getting all users  */
         val API_URL_GET_USER_LIST = API_BASE_URL + "users.json"
