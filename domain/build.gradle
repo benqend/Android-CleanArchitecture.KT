@@ -17,6 +17,7 @@ configurations {
 sourceSets {
     main.kotlin.srcDirs += 'src/main/kotlin'
     main.java.srcDirs += 'src/main/java'
+    main.java.srcDirs += 'src/main/kotlin'
 }
 
 dependencies {
@@ -32,4 +33,14 @@ dependencies {
 
     testCompile domainTestDependencies.junit
     testCompile domainTestDependencies.mockito
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+buildscript {
+    ext.kotlin_version = '1.1.0'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }
